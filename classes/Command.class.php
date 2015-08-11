@@ -18,7 +18,7 @@ class Command extends Bot {
 	 */
 	public function isValid($command, $target)
 	{
-		$commandList = ["help", "fortune", "boe", "weather", "laugh", "doge", "git"];
+		$commandList = ["help", "fortune", "boe", "weather", "laugh", "doge", "git", "rigged"];
 		$command 	 = preg_replace("/\//", "", $command);
 		$validTarget = false;
 
@@ -57,7 +57,8 @@ class Command extends Bot {
 				"/fortune  -  Get a fortune cookie \r\n" .
 				"/doge  -  Send a doge sticker \r\n" . 
 				"/git <query>  -  Search for a repository on GitHub \r\n" .
-				"/laugh  -  Make me laugh \r\n";
+				"/laugh  -  Make me laugh \r\n" . 
+				"/rigged  -  Make sure I'm not rigged \r\n";
 		
 		return Send::sendMessage($this->update->message->chat->getId(), $text);
 	}
@@ -242,6 +243,18 @@ class Command extends Bot {
 		}
 
 		return Send::sendMessage($this->update->message->chat->getId(), $text, true);
+	}
+
+	/**
+	 * Make sure that the bot is not rigged
+	 *
+	 * @return array
+	 */
+	public function rigged()
+	{
+		$text = "I'm not rigged ye bastard!";
+
+		return Send::sendMessage($this->update->message->chat->getId(), $text);
 	}
 }
 
