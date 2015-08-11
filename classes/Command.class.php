@@ -252,7 +252,14 @@ class Command extends Bot {
 	 */
 	public function rigged()
 	{
-		$text = "I'm not rigged ye bastard!";
+		$riggedList = [
+					"I'm not rigged ye bastard!",
+					"Fock off m8, I'm not rigged!",
+					"No rigging here!",
+					"Really, 'topkek' is only random! REALLY!!!!111oneone"
+				];
+
+		$text = $riggedList[array_rand($riggedList)];
 
 		return Send::sendMessage($this->update->message->chat->getId(), $text);
 	}
