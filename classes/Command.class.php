@@ -173,7 +173,10 @@ class Command extends Bot {
 				"trolololol",
 				"hihihihihi",
 				"lmao",
-				"rofl"
+				"rofl",
+				"roflcopter",
+				"55555",
+				"www",
 			];
 
 		$text = $laughList[array_rand($laughList)];
