@@ -75,10 +75,12 @@ class Command extends Bot {
 		exec("fortune", $out, $code);
 
 		// If the return code is 0 (successful) return the fortune
-		if ($code === 0)	
+		if ($code === 0) {
 			foreach($out as $line) // Needed for multi-line fortunes
 				$text .= $line . "\r\n";
-		else
+				
+			$text = preg_replace("Mark Twain", 'Mark "The Twat" Twain', $text);
+		} else
 			$text = "No fortunes found :(";
 
 		return Send::sendMessage($this->update->message->chat->getId(), $text);
