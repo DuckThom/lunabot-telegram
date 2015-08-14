@@ -78,8 +78,8 @@ class Command extends Bot {
 		if ($code === 0) {
 			foreach($out as $line) // Needed for multi-line fortunes
 				$text .= $line . "\r\n";
-				
-			$text = preg_replace("Mark Twain", 'Mark "The Twat" Twain', $text);
+
+			$text = preg_replace("/Mark\sTwain/", 'Mark "The Twat" Twain', $text);
 		} else
 			$text = "No fortunes found :(";
 
