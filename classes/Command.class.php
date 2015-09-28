@@ -306,7 +306,7 @@ class Command extends Bot {
 					"ROOOSSSSSSSS - Trottimus",
 					"I'm in the bath tub Rosss - Trottimus",
 					"Alex Smithicles - Trottimus",
-					"What dose LSD stand for? 'Lympic Sport Dancers' - Trottimus",
+					"What does LSD stand for? 'Lympic Sport Dancers' - Trottimus",
 					"AW Take this in the face you, dirty pleb! - Trottimus",
 
 					"Do me! - Alsmiffy",
