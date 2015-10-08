@@ -72,7 +72,7 @@ class Command extends Bot {
 	{
 		$text = '';
 
-		exec("fortune", $out, $code);
+		exec("fortune -a", $out, $code);
 
 		// If the return code is 0 (successful) return the fortune
 		if ($code === 0) {
