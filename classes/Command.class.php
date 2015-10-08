@@ -331,6 +331,7 @@ class Command extends Bot {
 					"Get in the mixer! - Alsmiffy",
 					"That was fucking quality! - Alsmiffy",
 					"I was gonna say I'd fuck Trott, then kill myself. - Alsmiffy",
+					"I was concentrating too hard on fucking him, when I should have just been focusing on eating the dicks! - Alsmiffy",
 				];
 
 		$text = $quoteList[array_rand($quoteList)];
