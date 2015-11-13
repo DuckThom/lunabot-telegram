@@ -375,9 +375,15 @@ class Command extends Bot {
 
 			if ($code === 200)
 			{
-				return Send::sendPhoto($this->update->message->chat->getId(), $image);
+				$tmpfname = tempnam(sys_get_temp_dir(), "lunabot") . ".png";
+
+				$handle = fopen($tmpfname, "w");
+				fwrite($handle, $image);
+				fclose($handle);
+
+				return Send::sendPhoto($this->update->message->chat->getId(), $tmpfname, $gamertag);
 			} else {
-				$text = "No spartan was found with the gamertag: " . $gamertag[0];
+				$text = "No spartan was found with the gamertag: " . $gamertag;
 			}
 		}
 
@@ -385,4 +391,3 @@ class Command extends Bot {
 	}
 }
 
-?>

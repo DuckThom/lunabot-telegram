@@ -97,42 +97,34 @@ class Send {
 	/**
 	 * Send the image to telegram
 	 *
-	 * @param $chatID  - int
-	 * @param $photo   - string
+	 * @param $chatID   - int
+	 * @param $photo    - string
+	 * @param $gamertag - string
 	 * @return boolean
 	 */
-	public function sendPhoto($chatID, $photo, $reply_to_message_id = NULL)
+	public function sendPhoto($chatID, $photo, $gamertag, $reply_to_message_id = NULL)
 	{
 		$url      = "https://api.telegram.org/bot" . BOT_KEY . "/sendPhoto";
 		$tmpfname = tempnam(sys_get_temp_dir(), "LUNABOT");
 
-		$handle = fopen($tmpfname, "w");
-		fwrite($handle, $photo);
-		fclose($handle);
-
  		// POST data to send
 		$fields = array(
 			"chat_id"             => urlencode($chatID),
-			"photo"               => new CURLFile(realpath($tempfname)),
-			"reply_to_message_id" => (isset($reply_to_message_id) ? urlencode($reply_to_message_id) : '')
+			"photo"               => "@" . $photo,
+			"reply_to_message_id" => (isset($reply_to_message_id) ? urlencode($reply_to_message_id) : ''),
+			"caption"             => "GT: " . $gamertag
 		);
 		$fields_string = '';
-
-		foreach($fields as $key => $value) {
-			$fields_string .= $key . '=' . $value . '&';
-		}
-
-		rtrim($fields_string, '&');
 
 		$ch 	= curl_init();
 
 		// Set curl options
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			"Content-Type:multipart/form-data"
+			"Content-Type: multipart/form-data"
 		));
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_POST, count($fields));
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 		// Cast the return value to boolean
@@ -142,7 +134,7 @@ class Send {
 		curl_close($ch);
 
 		unset($ch);
-		unlink($tmpfname);
+		unlink($photo);
 
 		return (bool) $done;
 	}
