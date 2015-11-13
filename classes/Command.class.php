@@ -341,15 +341,15 @@ class Command extends Bot {
 
 	public function halo()
 	{
-		$gamertag = $this->update->message->getArgument();
+		$arg = $this->update->message->getArgument();
 		// Remove any non alphabetical/numerical chars
-		preg_match_all("/[a-zA-Z0-9]*/", $gamertag, $gamertag);
+		preg_match_all("/[a-zA-Z0-9]*/", $arg, $gamertag);
 
 		if ($gamertag[0] == '')
 		{
 			return $text = "Usage: /halo <gamertag>";
 		} else {
-			$url 	= str_replace("{gamertag}", $gamertag[0], "https://www.haloapi.com/profile/h5/profiles/{gamertag}/spartan");
+			$url 	= "https://www.haloapi.com/profile/h5/profiles/" . $gamertag[0] . "/spartan";
 
 			// Initialize curl
 			$ch 	= curl_init();
