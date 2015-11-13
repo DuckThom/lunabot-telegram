@@ -345,13 +345,13 @@ class Command extends Bot {
 		// Remove any non alphabetical/numerical chars
 		preg_match_all("/[a-zA-Z0-9]*/", $arg, $gamertag);
 
-		var_dump($gamertag[0]);
+		var_dump($gamertag);
 
-		if ($gamertag[0] == '')
+		if ($gamertag == '')
 		{
 			return $text = "Usage: /halo <gamertag>";
 		} else {
-			$url 	= "https://www.haloapi.com/profile/h5/profiles/" . $gamertag[0] . "/spartan";
+			$url 	= "https://www.haloapi.com/profile/h5/profiles/" . $gamertag . "/spartan";
 
 			// Initialize curl
 			$ch 	= curl_init();
