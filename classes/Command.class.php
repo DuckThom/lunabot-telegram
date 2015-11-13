@@ -19,7 +19,7 @@ class Command extends Bot {
 	public function isValid($command, $target)
 	{
 		$commandList = ["help", "fortune", "boe", "weather", "laugh", "doge", "git", "rigged", "hatquote", "halo"];
-		$command 	 = preg_replace("/\//", "", $command);
+		$command     = preg_replace("/\//", "", $command);
 		$validTarget = false;
 
 		// Is this bot the target?
@@ -339,6 +339,11 @@ class Command extends Bot {
 		return Send::sendMessage($this->update->message->chat->getId(), $text);
 	}
 
+	/**
+	 * Show the spartan for the matched gamertag
+	 *
+	 * @return mixed
+	 */
 	public function halo()
 	{
 		$arg = $this->update->message->getArgument();
@@ -370,6 +375,7 @@ class Command extends Bot {
 
 			if ($code === 200)
 			{
+				echo 'Sending photo?';
 				return Send::sendPhoto($this->update->message->chat->getId(), $image);
 			} else {
 				$text = "No spartan was found with the gamertag: " . $gamertag[0];

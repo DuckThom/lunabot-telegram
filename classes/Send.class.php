@@ -107,6 +107,7 @@ class Send {
 		$tmpfname = tempnam(sys_get_temp_dir(), "LUNABOT");
 
 		$handle = fopen($tmpfname, "w");
+		echo 'Writing temp file';
 		fwrite($handle, $photo);
 		fclose($handle);
 
@@ -131,9 +132,6 @@ class Send {
 		curl_setopt($ch, CURLOPT_POST, count($fields));
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			"Content-Type: multipart/form-data"
-		));
 		curl_setopt($ch, CURLOPT_INFILESIZE, filesize($tmpfname));
 
 		// Cast the return value to boolean
@@ -143,7 +141,7 @@ class Send {
 
 		unset($ch);
 		unlink($tmpfname);
-
+		echo 'done';
 		return $done;
 	}
 }
