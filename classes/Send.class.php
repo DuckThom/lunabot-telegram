@@ -113,7 +113,7 @@ class Send {
  		// POST data to send
 		$fields = array(
 			"chat_id"             => urlencode($chatID),
-			"photo"               => "@" . $tmpfname,
+			"photo"               => new CURLFile(realpath($tempfname)),
 			"reply_to_message_id" => (isset($reply_to_message_id) ? urlencode($reply_to_message_id) : '')
 		);
 		$fields_string = '';
@@ -127,11 +127,13 @@ class Send {
 		$ch 	= curl_init();
 
 		// Set curl options
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			"Content-Type:multipart/form-data"
+		));
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_POST, count($fields));
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_INFILESIZE, filesize($tmpfname));
 
 		// Cast the return value to boolean
 		$done  	= curl_exec($ch);
