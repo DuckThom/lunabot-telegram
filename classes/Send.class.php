@@ -107,7 +107,6 @@ class Send {
 		$tmpfname = tempnam(sys_get_temp_dir(), "LUNABOT");
 
 		$handle = fopen($tmpfname, "w");
-		echo 'Writing temp file';
 		fwrite($handle, $photo);
 		fclose($handle);
 
@@ -135,13 +134,14 @@ class Send {
 		curl_setopt($ch, CURLOPT_INFILESIZE, filesize($tmpfname));
 
 		// Cast the return value to boolean
-		$done  	= (bool) curl_exec($ch);
+		$done  	= curl_exec($ch);
+		var_dump($done);
 
 		curl_close($ch);
 
 		unset($ch);
 		unlink($tmpfname);
-		echo 'done';
-		return $done;
+
+		return (bool) $done;
 	}
 }

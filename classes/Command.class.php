@@ -375,7 +375,6 @@ class Command extends Bot {
 
 			if ($code === 200)
 			{
-				echo 'Sending photo?';
 				return Send::sendPhoto($this->update->message->chat->getId(), $image);
 			} else {
 				$text = "No spartan was found with the gamertag: " . $gamertag[0];
