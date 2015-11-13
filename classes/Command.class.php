@@ -345,6 +345,8 @@ class Command extends Bot {
 		// Remove any non alphabetical/numerical chars
 		preg_match_all("/[a-zA-Z0-9]*/", $arg, $gamertag);
 
+		var_dump($gamertag[0]);
+
 		if ($gamertag[0] == '')
 		{
 			return $text = "Usage: /halo <gamertag>";
