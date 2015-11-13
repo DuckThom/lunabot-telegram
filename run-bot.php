@@ -8,8 +8,6 @@ function _autoloader($class) {
 }
 spl_autoload_register('_autoloader');
 
-
-
 class Bot {
 
     private $running;
@@ -30,6 +28,8 @@ class Bot {
         define('BOT_KEY', $this->config["key"]);
         // OpenWeatherMap API Key
         define('OWM_KEY', $this->config["owm_key"]);
+        // Halo API Key
+        define("HALO_KEY", $this->config["halo_key"]);
         // Debugging mode
         define( 'DEBUG' , $this->config["debug"]);
 	// Anti flooding, timeout in seconds
@@ -115,7 +115,7 @@ class Bot {
 }
 
 // Create a new bot instance
-$bot  = new Bot();
+$bot = new Bot();
 
 // Run the bot
 $bot->run();
