@@ -128,14 +128,13 @@ class Send {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 		// Cast the return value to boolean
-		$done  	= curl_exec($ch);
-		var_dump($done);
+		$done  	= (bool) curl_exec($ch);
 
 		curl_close($ch);
 
 		unset($ch);
 		unlink($photo);
 
-		return (bool) $done;
+		return $done;
 	}
 }
