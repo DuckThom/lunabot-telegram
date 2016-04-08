@@ -8,7 +8,25 @@
  * Returned items should look something like this:
  * return Send::sendMessage($chatID, $text, $optional_args)
  *************************************/
-class Command extends Bot {
+class Command {
+
+	private $command;
+	private $target;
+	private $chatID;
+	private $arguments;
+
+	public function __construct(Update $update)
+	{
+		$this->command 	 = $update->getCommand();
+		$this->target 	 = $update->getTarget();
+		$this->chatID 	 = $update->getSenderId();
+		$this->arguments = $update->getArguments();
+
+		if ($this->isValid())
+		{
+			return $this->run($this->command);
+		}
+	}
 
 	/**
 	 * Check if the command is valid
@@ -16,14 +34,14 @@ class Command extends Bot {
 	 * @var string
 	 * @return boolean
 	 */
-	public function isValid($command, $target)
+	public function isValid()
 	{
-		$commandList = ["help", "fortune", "boe", "weather", "laugh", "doge", "git", "rigged", "hatquote", "halo"];
-		$command     = preg_replace("/\//", "", $command);
-		$validTarget = false;
+		$commandList    = ["help", "fortune", "boe", "weather", "laugh", "doge", "git", "rigged", "hatquote", "halo"];
+		$command 		= preg_replace("/\//", "", $this->command);
+		$validTarget    = false;
 
 		// Is this bot the target?
-		if ($target === "LunaBot" || $target === false)
+		if ($this->target === "LunaBot" || $this->target === false)
 			$validTarget = true;
 
 		// Is the command in the known command list and is this bot the target?
@@ -40,7 +58,7 @@ class Command extends Bot {
 	 */
 	public function run($command)
 	{
-		return Command::$command();
+		return $this->$command();
 	}
 
 	/**
@@ -60,7 +78,7 @@ class Command extends Bot {
 				"/laugh  -  Make me laugh \r\n" .
 				"/rigged  -  Make sure I'm not rigged \r\n";
 
-		return Send::sendMessage($this->update->message->chat->getId(), $text);
+		return Send::sendMessage($this->chatID, $text);
 	}
 
 	/**
@@ -83,7 +101,7 @@ class Command extends Bot {
 		} else
 			$text = "No fortunes found :(";
 
-		return Send::sendMessage($this->update->message->chat->getId(), $text);
+		return Send::sendMessage($this->chatID, $text);
 	}
 
 	/**
@@ -93,7 +111,7 @@ class Command extends Bot {
 	 */
 	public function boe()
 	{
-		return Send::sendMessage($this->update->message->chat->getId(), "Schrik!");
+		return Send::sendMessage($this->chatID, "Schrik!");
 	}
 
 	/**
@@ -104,7 +122,7 @@ class Command extends Bot {
 	 */
 	public function weather()
 	{
-		$location = $this->update->message->getArgument();
+		$location = $this->arguments;
 
 		if ($location === '')
 			$text = "Usage: /weather <location>";
@@ -146,7 +164,7 @@ class Command extends Bot {
 				$text = "Error retrieving weather data, please try again later";
 		}
 
-		return Send::sendMessage($this->update->message->chat->getId(), $text);
+		return Send::sendMessage($this->chatID, $text);
 	}
 
 	/**
@@ -181,7 +199,7 @@ class Command extends Bot {
 
 		$text = $laughList[array_rand($laughList)];
 
-		return Send::sendMessage($this->update->message->chat->getId(), $text);
+		return Send::sendMessage($this->chatID, $text);
 	}
 
 	/**
@@ -191,7 +209,7 @@ class Command extends Bot {
 	 */
 	public function doge()
 	{
-		return Send::sendSticker($this->update->message->chat->getId(), Emoji::getSticker('doge'));
+		return Send::sendSticker($this->chatID, Emoji::getSticker('doge'));
 	}
 
 	/**
@@ -202,7 +220,7 @@ class Command extends Bot {
 	 */
 	public function git()
 	{
-		$query = $this->update->message->getArgument();
+		$query = $this->arguments;
 
 		if ($query === '')
 			$text = "Usage: /git <query>";
@@ -247,7 +265,7 @@ class Command extends Bot {
 				$text = "Error retrieving git data, please try again later";
 		}
 
-		return Send::sendMessage($this->update->message->chat->getId(), $text, true);
+		return Send::sendMessage($this->chatID, $text, true);
 	}
 
 	/**
@@ -266,7 +284,7 @@ class Command extends Bot {
 
 		$text = $riggedList[array_rand($riggedList)];
 
-		return Send::sendMessage($this->update->message->chat->getId(), $text);
+		return Send::sendMessage($this->chatID, $text);
 	}
 
 	/**
@@ -336,7 +354,7 @@ class Command extends Bot {
 
 		$text = $quoteList[array_rand($quoteList)];
 
-		return Send::sendMessage($this->update->message->chat->getId(), $text);
+		return Send::sendMessage($this->chatID, $text);
 	}
 
 	/**
@@ -346,7 +364,7 @@ class Command extends Bot {
 	 */
 	public function halo()
 	{
-		$arg = $this->update->message->getArgument();
+		$arg = $this->arguments;
 		// Remove any non alphabetical/numerical chars
 		preg_match_all("/[a-zA-Z0-9]*/", $arg, $gamertag);
 
@@ -363,10 +381,10 @@ class Command extends Bot {
 			// Set the curl options
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-		        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-		                        "Ocp-Apim-Subscription-Key: " . HALO_KEY,
-		                ]);
+		    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+		        "Ocp-Apim-Subscription-Key: " . HALO_KEY,
+		    ]);
 
 			$image 	= curl_exec($ch);
 			$code 	= curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -381,13 +399,12 @@ class Command extends Bot {
 				fwrite($handle, $image);
 				fclose($handle);
 
-				return Send::sendPhoto($this->update->message->chat->getId(), $tmpfname, $gamertag);
+				return Send::sendPhoto($this->chatID, $tmpfname, $gamertag);
 			} else {
 				$text = "No spartan was found with the gamertag: " . $gamertag;
 			}
 		}
 
-		return Send::sendMessage($this->update->message->chat->getId(), $text);
+		return Send::sendMessage($this->chatID, $text);
 	}
 }
-

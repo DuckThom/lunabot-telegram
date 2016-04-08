@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Auto load the other classes when needed
- */
+* Auto load the other classes when needed
+*/
 function _autoloader($class) {
     include "classes/" . $class . ".class.php";
 }
@@ -22,7 +22,7 @@ class Bot {
         $this->running    = true;
         $this->config     = parse_ini_file('config/bot-config.ini');
         $this->offset     = 0;
-	$this->lastUpdate = [];
+        $this->lastUpdate = [];
 
         // Telegram Bot API key
         define('BOT_KEY', $this->config["key"]);
@@ -32,18 +32,18 @@ class Bot {
         define("HALO_KEY", $this->config["halo_key"]);
         // Debugging mode
         define( 'DEBUG' , $this->config["debug"]);
-	// Anti flooding, timeout in seconds
-	define('MSG_TIMEOUT', (int) $this->config["msg_timeout"]);
+        // Anti flooding, timeout in seconds
+        define('MSG_TIMEOUT', (int) $this->config["msg_timeout"]);
     }
 
     /**
-     * Main bot loop
-     */
+    * Main bot loop
+    */
     public function run()
     {
         /**
-         * Notify that the bot is running
-         */
+        * Notify that the bot is running
+        */
         echo "Bot is running\r\n";
 
         while($this->running)
@@ -68,42 +68,41 @@ class Bot {
             $input  = json_decode($input, true);
 
             /**
-             * Check if the long polling timeout was reached.
-             * If so, don't parse it any further.
-             */
+            * Check if the long polling timeout was reached.
+            * If so, don't parse it any further.
+            */
             if (!empty($input['result']))
             {
                 if (DEBUG)
-                    var_dump($input);
+                var_dump($input);
 
                 // Create an object out of the returned json
-                $this->update       = new Update($input["result"][0]);
+                $update = new Update($input["result"][0]);
 
-                // Check if the command is valid, does it do anything?
-                if (
-			Command::isValid($this->update->message->getCommand(), $this->update->message->getTarget()) && // Is it a valid command?
-			$this->update->message->from->getFirstName() !== "Luna Bot" && // Check if the bot didn't send the command (just to be sure)
-			!in_array($this->update->message->from->getId(), file("config/blacklist")) // Check if the user is blacklisted
-		)
+                if (!in_array($update->getSenderId(), file("config/blacklist")))
                 {
-			// If the user is not recognised, add them to the anti flooding array but don't time them out yet
-			if (!isset($this->lastUpdate[$this->update->message->from->getId()]))
-				$this->lastUpdate[$this->update->message->from->getId()] = (time() - MSG_TIMEOUT) - 1;
 
-			if (time() - $this->lastUpdate[$this->update->message->from->getId()] > MSG_TIMEOUT)
-			{
-	                    	if (Command::run($this->update->message->getCommand()))
-        	                	// Echo the command to the console for debugging
-                	        	echo "Time: " . time() .  " Command '" . $this->update->message->getCommand() . "' with arguments '" . $this->update->message->getArgument() . "' issued by '" . $this->update->message->from->getFirstName() . " - " . $this->update->message->from->getId() ."'\r\n";
-                	} else
-				echo "[THROTTLED] - Time: " . time() . " Command '" . $this->update->message->getCommand() . "' with arguments '" . $this->update->message->getArgument() . "' issued by '" . $this->update->message->from->getFirstName() . " - " . $this->update->message->from->getId() . "'\r\n";
-		}
 
-		// Log the time a user sent a command
-		$this->lastUpdate[$this->update->message->from->getId()] = time();
+                    // If the user is not recognised, add them to the anti flooding array but don't time them out yet
+                    if (!isset($this->lastUpdate[$update->getSenderId()]))
+                    $this->lastUpdate[$update->getSenderId()] = (time() - MSG_TIMEOUT) - 1;
+
+                    if (time() - $this->lastUpdate[$update->getSenderId()] > MSG_TIMEOUT)
+                    {
+                        if (new Command($update))
+                            // Echo the command to the console for debugging
+                            echo "Time: " . time() .  " Command '" . $update->getCommand() . "' with arguments '" . $update->getArguments() . "' issued by '" . $update->getSenderFirstName() . " - " . $update->getSenderId() ."'\r\n";
+                        else
+                            echo "Time: " . time() . " It looks like a command failed... Command '" . $update->getCommand() . "' with arguments '" . $update->getArguments();
+                    } else
+                        echo "[THROTTLED] - Time: " . time() . " Command '" . $update->getCommand() . "' with arguments '" . $update->getArguments() . "' issued by '" . $update->getSenderFirstName() . " - " . $update->getSenderId() . "'\r\n";
+                }
+
+                // Log the time a user sent a command
+                $this->lastUpdate[$update->getSenderId()] = time();
 
                 // Increase the offset for the update_id by one
-                $this->offset = $this->update->getId() + 1;
+                $this->offset = $update->getId() + 1;
             }
 
             // Clear some stuff for the next loop
