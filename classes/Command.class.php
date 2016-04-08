@@ -19,7 +19,7 @@ class Command {
 	{
 		$this->command 	 = $update->getCommand();
 		$this->target 	 = $update->getTarget();
-		$this->chatID 	 = $update->getSenderId();
+		$this->chatID 	 = $update->getChatId();
 		$this->arguments = $update->getArguments();
 
 		if ($this->isValid())

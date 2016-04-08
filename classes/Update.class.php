@@ -58,4 +58,9 @@ class Update {
 		return $this->message->getArgument();
 	}
 
+	public function getChatId()
+	{
+		return $this->message->chat->getId();
+	}
+
 }
