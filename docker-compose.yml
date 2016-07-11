@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+
+### Nginx Server Container ##################################
+
+    nginx:
+        build: ./docker/nginx
+        volumes_from:
+            - php
+        volumes:
+            - ./storage/logs/nginx/:/var/log/nginx
+            - ~/.certs/:/etc/nginx/certs
+        environment:
+            VIRTUAL_HOST: 'telegram.local'
+        links:
+            - php
+        networks:
+            - default
+            - proxy        
+        links:
+            - php
+
+### PHP Container ###########################################
+
+    php:
+        build: ./docker/php
+        volumes:
+            - ./:/var/www/telegram-bot
+            - ./storage/logs/php/:/usr/local/var/log/telegram
+        expose:
+            - "9000"
+
+networks:
+    # nginx-proxy image network
+    proxy:
+        external:
+            name: proxy_network

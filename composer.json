@@ -1,0 +1,23 @@
+{
+    "name": "luna/lunabot",
+    "description": "A telegram bot called lunabot",
+    "require": {
+        "telegram-bot/api": "^2.2",
+        "josegonzalez/dotenv": "^2.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thomas Wiringa",
+            "email": "thomas.wiringa@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Bot\\": "bot/"
+        },
+        "files": [
+            "bot/helpers.php"
+        ]
+    }
+}
