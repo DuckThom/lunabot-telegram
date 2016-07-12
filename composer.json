@@ -3,7 +3,9 @@
     "description": "A telegram bot called lunabot",
     "require": {
         "telegram-bot/api": "^2.2",
-        "josegonzalez/dotenv": "^2.0"
+        "josegonzalez/dotenv": "^2.0",
+        "guzzlehttp/guzzle": "~6.0",
+        "nayjest/str-case-converter": "~1.0"
     },
     "license": "MIT",
     "authors": [

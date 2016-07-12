@@ -3,6 +3,7 @@
 namespace Bot\Commands;
 
 use Bot\Client;
+use GuzzleHttp\Client as Http;
 use TelegramBot\Api\Types\Message;
 
 class Weather extends Command
@@ -39,38 +40,33 @@ class Weather extends Command
         if ($location === '') {
             $text = "Usage: /weather <location>";
         } else {
-			$location = urlencode($location);
+            $http = new Http([
+                'base_uri'  => 'http://api.openweathermap.org/',
 
-			// Create the url
-			$url 	= "http://api.openweathermap.org/data/2.5/weather?q=" . $location . "&APPID=" . env('OWM_API');
+                'timeout'   => 2.0
+            ]);
 
-            // Initialize curl
-			$ch 	= curl_init();
-
-            // Set the curl options
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-            // Run the query
-			$input 	= curl_exec($ch);
-
-            // Close the connection
-			curl_close($ch);
+            $response = $http->request('GET', 'data/2.5/weather', [
+                'query' => [
+                    'q'     => $location,
+                    'APPID' => env('OWM_API')
+                ]
+            ]);
 
             // Parse the json returned by the OpenWeatherMap API
-			$input 	= json_decode($input, true);
+			$input 	= json_decode($response->getBody(), true);
 
 			// Has the location been found by the OpenWeatherMap API
-			if (isset($input["cod"])) {
+			if ($response->getStatusCode() === 200) {
                 if ($input["cod"] !== 200) {
     				$text = "No weather data found for this location: " . ucfirst($location);
                 } else {
-					$text = "City: " . ucfirst($location) . "\n" .
+					$text = "City: " . $input['name'] . ", " . $input['sys']['country'] . "\n" .
 						    "Temperature: " . round($input["main"]["temp"] - 272.15, 1) . " °C \n" .
 						    "Weather: " . $input["weather"][0]["main"] . " " . $this->emoji[(rtrim($input["weather"][0]["icon"], "nd"))];
 			    }
             } else {
-				$text = "Error retrieving weather data, please try again later";
+				$text = "Error retrieving weather data from API";
             }
 		}
 

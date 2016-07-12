@@ -2,8 +2,9 @@
 
 namespace Bot;
 
-use \TelegramBot\Api\Client as ApiClient;
 use Bot\Commands\Commands;
+use Nayjest\StrCaseConverter\Str;
+use \TelegramBot\Api\Client as ApiClient;
 
 class Client extends ApiClient
 {
@@ -15,11 +16,11 @@ class Client extends ApiClient
      */
     public function loadCommands()
     {
-        $client = $this;
-
+        $bot = $this;
+        
         foreach(Commands::$commands as $command => $class) {
-            $this->command($command, function($message) use (&$client, $command, $class) {
-                $class::run($client, $message);
+            $this->command($command, function($message) use (&$bot, $command, $class) {
+                $class::run($bot, $message);
             });
         }
     }

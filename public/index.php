@@ -1,7 +1,8 @@
 <?php
 
-require(__DIR__ . '/../vendor/autoload.php');
+require('../vendor/autoload.php');
 
+define('BOT_START', microtime(true));
 define('BASE_PATH', __DIR__ . "/..");
 
 $loader = new josegonzalez\Dotenv\Loader(base_path('.env'));

@@ -14,10 +14,13 @@ class Commands extends Command
      * @var array
      */
     public static $commands = [
-        'commands' => self::class,
-        'ping' => Ping::class,
-        'weather' => Weather::class,
-        'fortune' => Fortune::class
+        'commands'  => self::class,
+        'ping'      => Ping::class,
+        'weather'   => Weather::class,
+        'fortune'   => Fortune::class,
+        'laugh'     => Laugh::class,
+        'doge'      => Doge::class,
+        'git'       => Git::class
     ];
 
     /**
