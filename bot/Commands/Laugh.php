@@ -8,6 +8,11 @@ use TelegramBot\Api\Types\Message;
 class Laugh extends Command
 {
 
+    /**
+     * List of possible responses.
+     *
+     * @var array
+     */
     private $responses = [
 		"HAHAHAHAHAHAHAHAHAHAHAHAHAHA",
 		"mwaahaAHAHAAHHAHAAHHAHAHA",
@@ -31,6 +36,13 @@ class Laugh extends Command
 		"www",
 	];
 
+    /**
+     * Command handler.
+     *
+     * @param  Bot\Client $bot
+     * @param  \TelegramBot\Api\Types\Message $message
+     * @param  array $args
+     */
     protected function handle(Client $bot, Message $message, $args)
     {
         $text = $this->responses[array_rand($this->responses)];

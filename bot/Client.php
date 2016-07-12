@@ -2,8 +2,8 @@
 
 namespace Bot;
 
+use Bot\Log;
 use Bot\Commands\Commands;
-use Nayjest\StrCaseConverter\Str;
 use TelegramBot\Api\Types\Message;
 use TelegramBot\Api\Client as ApiClient;
 
@@ -22,6 +22,8 @@ class Client extends ApiClient
         foreach(Commands::$commands as $command => $class) {
             $this->command($command, function($message) use (&$bot, $command, $class) {
                 if ($bot->isTarget($message)) {
+                    Log::info("Executing command {$command} - Requester: " . $message->getFrom()->getFirstName() . " " . $message->getFrom()->getLastName());
+
                     $class::run($bot, $message);
                 }
             });

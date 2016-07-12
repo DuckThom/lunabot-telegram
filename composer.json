@@ -5,7 +5,7 @@
         "telegram-bot/api": "^2.2",
         "josegonzalez/dotenv": "^2.0",
         "guzzlehttp/guzzle": "~6.0",
-        "nayjest/str-case-converter": "~1.0"
+        "monolog/monolog": "^1.20"
     },
     "license": "MIT",
     "authors": [

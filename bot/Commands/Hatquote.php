@@ -8,6 +8,11 @@ use TelegramBot\Api\Types\Message;
 class Hatquote extends Command
 {
 
+    /**
+     * List of possible responses.
+     *
+     * @var array
+     */
     private $responses = [
 		"Eat Shit! - Djh3max",
 		"Are you hungry? Eat Shit! - Djh3max",
@@ -66,6 +71,13 @@ class Hatquote extends Command
 		"I was concentrating too hard on fucking him, when I should have just been focusing on eating the dicks! - Alsmiffy",
 	];
 
+    /**
+     * Command handler.
+     *
+     * @param  Bot\Client $bot
+     * @param  \TelegramBot\Api\Types\Message $message
+     * @param  array $args
+     */
     protected function handle(Client $bot, Message $message, $args)
     {
         $text = $this->responses[array_rand($this->responses)];
