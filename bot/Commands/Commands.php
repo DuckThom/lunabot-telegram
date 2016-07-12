@@ -20,7 +20,8 @@ class Commands extends Command
         'fortune'   => Fortune::class,
         'laugh'     => Laugh::class,
         'doge'      => Doge::class,
-        'git'       => Git::class
+        'git'       => Git::class,
+        'hatquote'  => Hatquote::class
     ];
 
     /**
