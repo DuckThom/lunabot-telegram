@@ -6,13 +6,17 @@ use Bot\Client;
 use GuzzleHttp\Client as Http;
 use TelegramBot\Api\Types\Message;
 
+/**
+ * Class Git
+ * @package Bot\Commands
+ */
 class Git extends Command
 {
 
     /**
      * Command handler.
      *
-     * @param  Bot\Client $bot
+     * @param  Client $bot
      * @param  \TelegramBot\Api\Types\Message $message
      * @param  array $args
      */

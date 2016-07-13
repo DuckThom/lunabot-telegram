@@ -5,8 +5,18 @@ namespace Bot;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
+/**
+ * Class Log
+ * @package Bot
+ */
 class Log {
 
+    /**
+     * Using this function will cause functions from Monolog\Logger to be static
+     *
+     * @param $method
+     * @param $args
+     */
     public static function __callStatic($method, $args)
     {
         call_user_func_array(function($message) use ($method) {

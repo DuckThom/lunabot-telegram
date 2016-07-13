@@ -7,6 +7,10 @@ use Bot\Commands\Commands;
 use TelegramBot\Api\Types\Message;
 use TelegramBot\Api\Client as ApiClient;
 
+/**
+ * Class Client
+ * @package Bot
+ */
 class Client extends ApiClient
 {
 
@@ -33,7 +37,7 @@ class Client extends ApiClient
     /**
      * Check if the bot is the target
      *
-     * @param  TelegramBot\Api\Types\Message $message
+     * @param  \TelegramBot\Api\Types\Message $message
      * @return boolean
      */
     public function isTarget($message)

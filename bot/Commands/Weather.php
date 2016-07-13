@@ -6,6 +6,10 @@ use Bot\Client;
 use GuzzleHttp\Client as Http;
 use TelegramBot\Api\Types\Message;
 
+/**
+ * Class Weather
+ * @package Bot\Commands
+ */
 class Weather extends Command
 {
 
@@ -29,7 +33,7 @@ class Weather extends Command
     /**
      * Command handler.
      *
-     * @param  Bot\Client $bot
+     * @param  Client $bot
      * @param  \TelegramBot\Api\Types\Message $message
      * @param  array $args
      */

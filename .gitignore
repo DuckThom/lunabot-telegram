@@ -2,3 +2,4 @@
 test-data.json
 .env
 /storage/logs/
+/.idea/

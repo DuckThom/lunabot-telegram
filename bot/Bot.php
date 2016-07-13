@@ -6,8 +6,17 @@ use Bot\Log;
 use Bot\Client;
 use josegonzalez\Dotenv\Loader;
 
+/**
+ * Class Bot
+ * @package Bot
+ */
 class Bot {
 
+    /**
+     * Start the bot.
+     *
+     * @return void
+     */
     public static function boot()
     {
         $loader = new Loader(base_path('.env'));

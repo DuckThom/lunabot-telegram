@@ -5,13 +5,17 @@ namespace Bot\Commands;
 use Bot\Client;
 use TelegramBot\Api\Types\Message;
 
+/**
+ * Class Doge
+ * @package Bot\Commands
+ */
 class Doge extends Command
 {
 
     /**
      * Command handler.
      *
-     * @param  Bot\Client $bot
+     * @param  Client $bot
      * @param  \TelegramBot\Api\Types\Message $message
      * @param  array $args
      */

@@ -5,6 +5,10 @@ namespace Bot\Commands;
 use Bot\Client;
 use TelegramBot\Api\Types\Message;
 
+/**
+ * Class Hatquote
+ * @package Bot\Commands
+ */
 class Hatquote extends Command
 {
 
@@ -74,7 +78,7 @@ class Hatquote extends Command
     /**
      * Command handler.
      *
-     * @param  Bot\Client $bot
+     * @param  Client $bot
      * @param  \TelegramBot\Api\Types\Message $message
      * @param  array $args
      */
