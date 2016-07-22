@@ -26,7 +26,11 @@ class Client extends ApiClient
         foreach(Commands::$commands as $command => $class) {
             $this->command($command, function($message) use (&$bot, $command, $class) {
                 if ($bot->isTarget($message)) {
-                    Log::info("Executing command {$command} - Requester: " . json_encode($message->getFrom()));
+                    Log::info("Executing command {$command} - Requester: " . json_encode([
+                            'id' => $message->getFrom()->getId(),
+                            'first_name' => $message->getFrom()->getFirstName(),
+                            'last_name' => $message->getFrom()->getLastName()
+                        ]));
 
                     $class::run($bot, $message);
                 }
