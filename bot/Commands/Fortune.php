@@ -23,7 +23,7 @@ class Fortune extends Command
     {
         $text = '';
 
-		exec("fortune -a", $out, $code);
+		exec("/usr/games/fortune -a", $out, $code);
 
 		// If the return code is 0 (successful) return the fortune
 		if ($code === 0) {
