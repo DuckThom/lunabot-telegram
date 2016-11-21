@@ -25,7 +25,8 @@ class Commands extends Command
         'laugh'     => Laugh::class,
         'doge'      => Doge::class,
         'git'       => Git::class,
-        'hatquote'  => Hatquote::class
+        'hatquote'  => Hatquote::class,
+        'rigged'    => Rigged::class,
     ];
 
     /**
