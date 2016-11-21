@@ -29,7 +29,8 @@ class Client extends ApiClient
                     Log::info("Executing command {$command} - Requester: " . json_encode([
                             'id' => $message->getFrom()->getId(),
                             'first_name' => $message->getFrom()->getFirstName(),
-                            'last_name' => $message->getFrom()->getLastName()
+                            'last_name' => $message->getFrom()->getLastName(),
+                            'chat_id' => $message->getChat()->getId(),
                         ]));
 
                     $class::run($bot, $message);
