@@ -11,7 +11,6 @@ use TelegramBot\Api\Types\Message;
  */
 class Rigged extends Command
 {
-    
     /**
      * @var array
      */
@@ -30,6 +29,7 @@ class Rigged extends Command
      * @param  Client $bot
      * @param  \TelegramBot\Api\Types\Message $message
      * @param  array $args
+     * @return void
      */
     protected function handle(Client $bot, Message $message, $args)
     {
@@ -47,5 +47,4 @@ class Rigged extends Command
     {
         return $this->messages[array_rand($this->messages)];
     }
-    
 }

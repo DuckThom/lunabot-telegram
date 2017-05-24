@@ -13,7 +13,6 @@ use TelegramBot\Api\Client as ApiClient;
  */
 class Client extends ApiClient
 {
-
     /**
      * Load all the commands in bot/Commands/Kernel::$commands
      *
@@ -54,5 +53,4 @@ class Client extends ApiClient
 
         return strtolower($target) === strtolower($name);
     }
-
 }

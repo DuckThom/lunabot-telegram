@@ -35,6 +35,7 @@ class Commands extends Command
      * @param  Client $bot
      * @param  \TelegramBot\Api\Types\Message $message
      * @param  array $args
+     * @return void
      */
     protected function handle(Client $bot, Message $message, $args)
     {

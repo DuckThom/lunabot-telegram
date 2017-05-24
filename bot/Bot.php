@@ -11,7 +11,6 @@ use josegonzalez\Dotenv\Loader;
  * @package Bot
  */
 class Bot {
-
     /**
      * Start the bot.
      *
@@ -38,5 +37,4 @@ class Bot {
             Log::error($e->getMessage());
         }
     }
-
 }

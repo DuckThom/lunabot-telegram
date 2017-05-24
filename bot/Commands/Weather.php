@@ -12,7 +12,6 @@ use TelegramBot\Api\Types\Message;
  */
 class Weather extends Command
 {
-
     /**
      * OpenWeatherMap icons for the weather
      *
@@ -20,14 +19,14 @@ class Weather extends Command
      */
     private $emoji = [
         "01" => "\xE2\x98\x80", // Clear sky
-		"02" => "\xE2\x9B\x85", // Few clouds
-		"03" => "\xE2\x98\x81", // Scattered clouds
-		"04" => "\xE2\x98\x81", // Broken clouds
-		"09" => "\xE2\x98\x94", // Shower rain
-		"10" => "\xE2\x98\x94", // Rain
-		"11" => "\xE2\x9A\xA1", // Thunderstorm
-		"13" => "\xE2\x9B\x84", // Snow
-		"50" => "\xE3\x80\xB0", // Mist
+        "02" => "\xE2\x9B\x85", // Few clouds
+        "03" => "\xE2\x98\x81", // Scattered clouds
+        "04" => "\xE2\x98\x81", // Broken clouds
+        "09" => "\xE2\x98\x94", // Shower rain
+        "10" => "\xE2\x98\x94", // Rain
+        "11" => "\xE2\x9A\xA1", // Thunderstorm
+        "13" => "\xE2\x9B\x84", // Snow
+        "50" => "\xE3\x80\xB0", // Mist
     ];
 
     /**
@@ -36,6 +35,7 @@ class Weather extends Command
      * @param  Client $bot
      * @param  \TelegramBot\Api\Types\Message $message
      * @param  array $args
+     * @return void
      */
     protected function handle(Client $bot, Message $message, $args)
     {
@@ -58,23 +58,22 @@ class Weather extends Command
             ]);
 
             // Parse the json returned by the OpenWeatherMap API
-			$input 	= json_decode($response->getBody(), true);
+            $input 	= json_decode($response->getBody(), true);
 
-			// Has the location been found by the OpenWeatherMap API
-			if ($response->getStatusCode() === 200) {
+            // Has the location been found by the OpenWeatherMap API
+            if ($response->getStatusCode() === 200) {
                 if ($input["cod"] !== 200) {
-    				$text = "No weather data found for this location: " . ucfirst($location);
+                    $text = "No weather data found for this location: " . ucfirst($location);
                 } else {
-					$text = "City: " . $input['name'] . ", " . $input['sys']['country'] . "\n" .
-						    "Temperature: " . round($input["main"]["temp"] - 272.15, 1) . " °C \n" .
-						    "Weather: " . $input["weather"][0]["main"] . " " . $this->emoji[(rtrim($input["weather"][0]["icon"], "nd"))];
-			    }
+                    $text = "City: " . $input['name'] . ", " . $input['sys']['country'] . "\n" .
+                        "Temperature: " . round($input["main"]["temp"] - 272.15, 1) . " °C \n" .
+                        "Weather: " . $input["weather"][0]["main"] . " " . $this->emoji[(rtrim($input["weather"][0]["icon"], "nd"))];
+                }
             } else {
-				$text = "Error retrieving weather data from API";
+                $text = "Error retrieving weather data from API";
             }
-		}
+        }
 
         $bot->sendMessage($message->getChat()->getId(), $text);
     }
-
 }

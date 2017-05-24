@@ -12,12 +12,12 @@ use Bot\Interfaces\Command as CommandInterface;
  */
 abstract class AdminCommand extends Command implements CommandInterface
 {
-
     /**
      * Run the command.
      *
      * @param  Client $bot
      * @param  Message $message
+     * @return void
      */
     public static function run(Client $bot, Message $message)
     {
@@ -31,5 +31,4 @@ abstract class AdminCommand extends Command implements CommandInterface
             $cmd->handle($bot, $message, $args);
         }
     }
-
 }

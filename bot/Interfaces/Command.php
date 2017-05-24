@@ -11,7 +11,6 @@ use TelegramBot\Api\Types\Message;
  */
 interface Command
 {
-
     /**
      * Command handler
      *
@@ -19,5 +18,4 @@ interface Command
      * @param  \TelegramBot\Api\Types\Message $message
      */
     public static function run(Client $bot, Message $message);
-
 }
