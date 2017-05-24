@@ -8,7 +8,6 @@ namespace Bot\Exceptions;
  */
 class Exception extends \Exception
 {
-
     /**
      * Exception constructor.
      * @param string $message
@@ -21,5 +20,4 @@ class Exception extends \Exception
 
         parent::__construct($message, $code, $previous);
     }
-
 }

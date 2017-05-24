@@ -11,34 +11,33 @@ use TelegramBot\Api\Types\Message;
  */
 class Laugh extends Command
 {
-
     /**
      * List of possible responses.
      *
      * @var array
      */
     private $responses = [
-		"HAHAHAHAHAHAHAHAHAHAHAHAHAHA",
-		"mwaahaAHAHAAHHAHAAHHAHAHA",
-		"hehe",
-		"hahahahaha",
-		"hahahaAHAHAHA",
-		"TeeHee",
-		"kek",
-		"topkek",
-		"lol",
-		"lawl",
-		"haha",
-		"huehuehue",
-		"lololololol",
-		"trolololol",
-		"hihihihihi",
-		"lmao",
-		"rofl",
-		"roflcopter",
-		"55555",
-		"www",
-	];
+        "HAHAHAHAHAHAHAHAHAHAHAHAHAHA",
+        "mwaahaAHAHAAHHAHAAHHAHAHA",
+        "hehe",
+        "hahahahaha",
+        "hahahaAHAHAHA",
+        "TeeHee",
+        "kek",
+        "topkek",
+        "lol",
+        "lawl",
+        "haha",
+        "huehuehue",
+        "lololololol",
+        "trolololol",
+        "hihihihihi",
+        "lmao",
+        "rofl",
+        "roflcopter",
+        "55555",
+        "www",
+    ];
 
     /**
      * Command handler.
@@ -46,6 +45,7 @@ class Laugh extends Command
      * @param  Client $bot
      * @param  \TelegramBot\Api\Types\Message $message
      * @param  array $args
+     * @return void
      */
     protected function handle(Client $bot, Message $message, $args)
     {
@@ -53,5 +53,4 @@ class Laugh extends Command
 
         $bot->sendMessage($message->getChat()->getId(), $text);
     }
-
 }

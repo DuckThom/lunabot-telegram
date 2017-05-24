@@ -2,15 +2,12 @@
 
 namespace Bot\Exceptions;
 
-use Bot\Exception;
-
 /**
  * Class CommandNotImplementedException
  * @package Bot\Exceptions
  */
 class CommandNotImplementedException extends Exception
 {
-
     /**
      * CommandNotImplementedException constructor.
      * @param $message
@@ -21,5 +18,4 @@ class CommandNotImplementedException extends Exception
     {
         parent::__construct($message, $code, $previous);
     }
-
 }

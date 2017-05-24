@@ -12,13 +12,13 @@ use TelegramBot\Api\Types\Message;
  */
 class Git extends Command
 {
-
     /**
      * Command handler.
      *
      * @param  Client $bot
      * @param  \TelegramBot\Api\Types\Message $message
      * @param  array $args
+     * @return void
      */
     protected function handle(Client $bot, Message $message, $args)
     {
@@ -26,8 +26,8 @@ class Git extends Command
         $author = $args[1] ?: null;
 
         if (!$args) {
-			$text = "Usage: /git <repository> <author>";
-		} else {
+            $text = "Usage: /git <repository> <author>";
+        } else {
             $query = ($author ? "user:{$author} " : "") . "{$repo}";
 
             $http = new Http([
@@ -48,28 +48,27 @@ class Git extends Command
 
             if ($response->getStatusCode() === 200) {
                 // Parse the json returned by the GitHub Search API
-    			$input 	= json_decode($response->getBody(), true);
+                $input 	= json_decode($response->getBody(), true);
 
-    			if (isset($input["total_count"])) {
+                if (isset($input["total_count"])) {
                     // Are there any results?
-    				if ($input["total_count"] === 0) {
-    					$text = "No github repositories found with: {$query}";
-    				} else {
-    					// Always return the first result from the array
-    					$text = "Showing top result: \r\n" .
-    							"User: " . $input["items"][0]["owner"]["login"] . "\r\n" .
-    							"Repo: " . $input["items"][0]["name"] . "\r\n" .
-    							$input["items"][0]["html_url"];
+                    if ($input["total_count"] === 0) {
+                        $text = "No github repositories found with: {$query}";
+                    } else {
+                        // Always return the first result from the array
+                        $text = "Showing top result: \r\n" .
+                            "User: " . $input["items"][0]["owner"]["login"] . "\r\n" .
+                            "Repo: " . $input["items"][0]["name"] . "\r\n" .
+                            $input["items"][0]["html_url"];
                     }
                 } else {
-    				$text = "Error retrieving git data, please try again later";
+                    $text = "Error retrieving git data, please try again later";
                 }
             } else {
                 $text = "Failed to get data from github API";
             }
-		}
+        }
 
         $bot->sendMessage($message->getChat()->getId(), $text);
     }
-
 }

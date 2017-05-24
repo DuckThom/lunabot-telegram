@@ -21,7 +21,7 @@ if (!function_exists('base_path')) {
      * @return string
      */
     function base_path($path = "") {
-        return BASE_PATH . "/" . $path;
+        return realpath(BASE_PATH . ($path ? "/" . $path : ''));
     }
 }
 

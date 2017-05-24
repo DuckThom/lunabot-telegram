@@ -13,12 +13,12 @@ use Bot\Interfaces\Command as CommandInterface;
  */
 abstract class Command implements CommandInterface
 {
-
     /**
      * Run the command.
      *
      * @param  Client $bot
      * @param  Message $message
+     * @return void
      */
     public static function run(Client $bot, Message $message)
     {
@@ -43,5 +43,4 @@ abstract class Command implements CommandInterface
     {
         throw new Exception(__CLASS__ . " does not have a handler.");
     }
-
 }
