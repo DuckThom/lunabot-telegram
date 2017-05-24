@@ -21,5 +21,8 @@
         "files": [
             "bot/helpers.php"
         ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.1"
     }
 }
