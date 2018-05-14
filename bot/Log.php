@@ -9,13 +9,14 @@ use Monolog\Handler\StreamHandler;
  * Class Log
  * @package Bot
  */
-class Log {
-
+class Log
+{
     /**
      * Using this function will cause functions from Monolog\Logger to be static
      *
-     * @param $method
-     * @param $args
+     * @param  string  $method
+     * @param  array  $args
+     * @return void
      */
     public static function __callStatic($method, $args)
     {
@@ -26,5 +27,4 @@ class Log {
             $log->$method($message);
         }, $args);
     }
-
 }

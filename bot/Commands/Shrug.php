@@ -6,10 +6,10 @@ use Bot\Client;
 use TelegramBot\Api\Types\Message;
 
 /**
- * Class Doge
+ * Class Shrug
  * @package Bot\Commands
  */
-class Doge extends Command
+class Shrug extends Command
 {
     /**
      * Command handler.
@@ -21,8 +21,6 @@ class Doge extends Command
      */
     protected function handle(Client $bot, Message $message, $args)
     {
-        $stickerHash = "BQADAgAD3gAD9HsZAAFphGBFqImfGAI";
-
-        $bot->sendSticker($message->getChat()->getId(), $stickerHash);
+        $bot->sendMessage($message->getChat()->getId(), "¯\_(ツ)_/¯");
     }
 }

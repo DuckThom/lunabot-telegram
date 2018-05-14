@@ -2,16 +2,14 @@
 
 namespace Bot;
 
-use Bot\Log;
-use Bot\Client;
 use josegonzalez\Dotenv\Loader;
 
 /**
- * Class Bot
+ * Bot
+ *
  * @package Bot
  */
 class Bot {
-
     /**
      * Start the bot.
      *
@@ -38,5 +36,4 @@ class Bot {
             Log::error($e->getMessage());
         }
     }
-
 }
