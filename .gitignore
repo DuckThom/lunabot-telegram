@@ -3,3 +3,4 @@ test-data.json
 .env
 /storage/logs/
 /.idea/
+docker-compose.yml
