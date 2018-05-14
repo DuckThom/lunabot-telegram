@@ -27,6 +27,7 @@ class Commands extends Command
         'git'       => Git::class,
         'hatquote'  => Hatquote::class,
         'rigged'    => Rigged::class,
+        'shrug'     => Shrug::class,
     ];
 
     /**
